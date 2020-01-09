@@ -48,33 +48,47 @@ dependencies {
     def acceptanceTestDependencies = rootProject.ext.acceptanceTesting
 
     //Compile time dependencies
-    kapt applicationDependencies.archComponentsCompiler
     kapt applicationDependencies.daggerCompiler
+    kapt applicationDependencies.glideKapt
     kapt applicationDependencies.moxyKapt
+    kapt applicationDependencies.roomKapt
     compileOnly applicationDependencies.javaxAnnotation
     compileOnly applicationDependencies.javaxInject
 
     //Application dependencies
+    //Support
     implementation applicationDependencies.kotlin
-    implementation applicationDependencies.kotlinCoroutines
-    implementation applicationDependencies.kotlinCoroutinesAndroid
     implementation applicationDependencies.appCompat
     implementation applicationDependencies.constraintLayout
-    implementation applicationDependencies.archComponentsUI
     implementation applicationDependencies.cardView
     implementation applicationDependencies.recyclerView
     implementation applicationDependencies.design
     implementation applicationDependencies.androidAnnotations
+    //Room
+    implementation applicationDependencies.room
+    implementation applicationDependencies.roomRx
+    //Gson
+    implementation applicationDependencies.gson
+    //Glide
     implementation applicationDependencies.glide
+    implementation applicationDependencies.glideOkhttp
+    //DI
     implementation applicationDependencies.dagger
+    //Retrofit
     implementation applicationDependencies.retrofit
+    implementation applicationDependencies.retrofitConverter
     implementation applicationDependencies.okhttpLoggingInterceptor
+    implementation applicationDependencies.retrofitRxAdapter
+    //Moxy
     implementation applicationDependencies.moxy
-    implementation applicationDependencies.moxyAndroid
-    implementation applicationDependencies.moxyAppCompat
-    //implementation applicationDependencies.moxyAndroidX
+    implementation applicationDependencies.moxyAndroidX
     implementation applicationDependencies.moxyKtx
+    //Cicerone
     implementation applicationDependencies.cicerone
+    //Rx
+    implementation applicationDependencies.rxAndroid
+    implementation applicationDependencies.rxJava
+    implementation applicationDependencies.rxRelay
 
     //Unit/Integration tests dependencies
     testImplementation unitTestDependencies.kotlin
