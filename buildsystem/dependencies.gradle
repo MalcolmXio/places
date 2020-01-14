@@ -60,6 +60,10 @@ ext {
             retrofitConverter       : "com.squareup.retrofit2:converter-gson:$retrofit_version",
             okhttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version",
             retrofitRxAdapter       : "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
+            //Lottie
+            lottie                  : 'com.airbnb.android:lottie:3.0.7',
+            //Adapter simplify
+            adapter                 : 'com.hannesdorfmann:adapterdelegates4:4.0.0',
             //Moxy
             moxy                    : "com.github.moxy-community:moxy:$moxy_version",
             moxyKapt                : "com.github.moxy-community:moxy-compiler:$moxy_version",
