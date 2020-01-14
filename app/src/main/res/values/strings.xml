@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Places</string>
+    <string name="loading">loading…</string>
+    <string name="ok">OK</string>
+
+    <string name="countries_title">Select country</string>
+
 </resources>
