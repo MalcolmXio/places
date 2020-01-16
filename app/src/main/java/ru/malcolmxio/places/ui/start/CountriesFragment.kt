@@ -13,6 +13,7 @@ import ru.malcolmxio.places.presentation.countries.CountriesPresenter
 import ru.malcolmxio.places.presentation.countries.CountriesView
 import ru.malcolmxio.places.ui.base.BaseFragment
 import ru.malcolmxio.places.ui.start.adapter.CountriesAdapterDelegate
+import ru.malcolmxio.places.util.extensions.addDividerItemDecoration
 import ru.malcolmxio.places.util.extensions.addSystemBottomPadding
 import ru.malcolmxio.places.util.extensions.addSystemTopPadding
 import ru.malcolmxio.places.util.extensions.getApplication
@@ -41,6 +42,7 @@ class CountriesFragment : BaseFragment(), CountriesView {
         with(recyclerView) {
             addSystemBottomPadding()
             layoutManager = LinearLayoutManager(context)
+            addDividerItemDecoration()
             setHasFixedSize(true)
             adapter = this@CountriesFragment.adapter
         }
@@ -51,7 +53,7 @@ class CountriesFragment : BaseFragment(), CountriesView {
     }
 
     override fun showProgress(show: Boolean) {
-        //Todo: showProgress!
+        showProgressDialog(show)
     }
 
     override fun showMessage(msg: String) {

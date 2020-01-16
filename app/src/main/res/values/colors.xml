@@ -35,4 +35,6 @@
     <color name="mariner">#397BCE</color>
 
     <color name="beige">#fff8e1</color>
+
+    <color name="dividerGreyColor">#ececec</color>
 </resources>
