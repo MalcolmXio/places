@@ -72,11 +72,7 @@ dependencies {
     implementation applicationDependencies.design
     implementation applicationDependencies.androidAnnotations
     //Google Maps
-    implementation (name:'maps-sdk-3.0.0-beta', ext:'aar')
-    implementation applicationDependencies.mapsBasement
-    implementation applicationDependencies.mapsBase
-    implementation applicationDependencies.mapsGcm
-    implementation applicationDependencies.mapsLocation
+    implementation applicationDependencies.maps
     //Room
     implementation applicationDependencies.room
     implementation applicationDependencies.roomRx

@@ -1,5 +1,6 @@
 package ru.malcolmxio.places.di.component
 
+import com.bumptech.glide.module.AppGlideModule
 import dagger.Component
 import ru.malcolmxio.places.di.module.AppModule
 import ru.malcolmxio.places.di.module.FlowNavigationModule
@@ -17,5 +18,7 @@ interface AppComponent {
     fun inject(activity: RouteActivity)
 
     fun inject(fragment: BaseFragment)
+
+    fun inject(glideModule: AppGlideModule)
 
 }
