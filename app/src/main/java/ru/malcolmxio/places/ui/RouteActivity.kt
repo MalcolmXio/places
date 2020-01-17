@@ -14,7 +14,7 @@ import moxy.MvpAppCompatActivity
 import ru.malcolmxio.places.App
 import ru.malcolmxio.places.R
 import ru.malcolmxio.places.Screens
-import ru.malcolmxio.places.di.GlobalNavigatorHolder
+import ru.malcolmxio.places.di.NavHolder
 import ru.malcolmxio.places.ui.base.BaseFragment
 import ru.malcolmxio.places.ui.base.MessageDialogFragment
 import ru.malcolmxio.places.util.extensions.doOnApplyWindowInsets
@@ -29,7 +29,7 @@ import javax.inject.Inject
 class RouteActivity : MvpAppCompatActivity() {
 
     @Inject
-    @GlobalNavigatorHolder
+    @NavHolder("Global")
     lateinit var navigatorHolder: NavigatorHolder
 
     @Inject

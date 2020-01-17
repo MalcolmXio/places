@@ -107,9 +107,7 @@ abstract class BaseFragment : MvpAppCompatFragment() {
         }
     }
 
-    open fun injectDependencies() {
-        getApplication().createFlowComponent(globalRouter)
-    }
+    open fun injectDependencies() = Unit
 
     open fun onBackPressed() = Unit
 

@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ru.malcolmxio.places.R
-import ru.malcolmxio.places.di.FragmentNavigatorHolder
-import ru.malcolmxio.places.presentation.flow.FlowRouter
+import ru.malcolmxio.places.di.NavHolder
 import ru.malcolmxio.places.util.extensions.getApplication
 import ru.malcolmxio.places.util.extensions.setLaunchScreen
 import ru.terrakok.cicerone.Navigator
@@ -22,21 +21,18 @@ abstract class FlowFragment : BaseFragment() {
         get() = childFragmentManager.findFragmentById(R.id.container) as? BaseFragment
 
     @Inject
-    @FragmentNavigatorHolder
+    @NavHolder("Fragment")
     lateinit var navigatorHolder: NavigatorHolder
 
-    @Inject
-    lateinit var router: FlowRouter
-
     override fun injectDependencies() {
-        super.injectDependencies()
-        getApplication().flowComponent?.inject(this@FlowFragment)
+        getApplication().createFlowComponent(globalRouter)
+        getApplication().flowComponent?.inject(this)
     }
 
     private val navigator: Navigator by lazy {
         object : SupportAppNavigator(this.activity, childFragmentManager, R.id.container) {
             override fun activityBack() {
-                router.exit()
+                globalRouter.exit()
             }
 
             override fun setupFragmentTransaction(

@@ -3,7 +3,7 @@ package ru.malcolmxio.places.di.module
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import ru.malcolmxio.places.di.GlobalNavigatorHolder
+import ru.malcolmxio.places.di.NavHolder
 import ru.malcolmxio.places.di.provider.GsonProvider
 import ru.malcolmxio.places.di.provider.SharedPreferencesProvider
 import ru.malcolmxio.places.di.provider.scheduler.AppSchedulers
@@ -39,7 +39,7 @@ class AppModule(private val context: Context) {
     fun provideRouter() = cicerone.router
 
     @Provides
-    @GlobalNavigatorHolder
+    @NavHolder("Global")
     fun provideNavigatorHolder() = cicerone.navigatorHolder
 
 }

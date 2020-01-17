@@ -61,7 +61,6 @@ class CountriesFragment : BaseFragment(), CountriesView {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         presenter.onBackPressed()
     }
 
