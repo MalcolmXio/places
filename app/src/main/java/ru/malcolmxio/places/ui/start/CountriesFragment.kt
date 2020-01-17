@@ -9,6 +9,7 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.malcolmxio.places.R
 import ru.malcolmxio.places.domain.model.country.Country
+import ru.malcolmxio.places.domain.model.country.Place
 import ru.malcolmxio.places.presentation.countries.CountriesPresenter
 import ru.malcolmxio.places.presentation.countries.CountriesView
 import ru.malcolmxio.places.ui.base.BaseFragment
@@ -72,7 +73,7 @@ class CountriesFragment : BaseFragment(), CountriesView {
     private inner class CountryAdapter : ListDelegationAdapter<MutableList<Any>>() {
         init {
             items = mutableListOf()
-            delegatesManager.addDelegate(CountriesAdapterDelegate({ /*tryOpenLink(it.url)*/ }))
+            delegatesManager.addDelegate(CountriesAdapterDelegate { presenter.onItemClicked(it.places as ArrayList<Place>) })
         }
 
         fun setData(libraries: List<Country>) {

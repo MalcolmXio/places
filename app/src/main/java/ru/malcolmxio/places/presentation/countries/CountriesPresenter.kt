@@ -1,7 +1,9 @@
 package ru.malcolmxio.places.presentation.countries
 
 import moxy.InjectViewState
+import ru.malcolmxio.places.Screens
 import ru.malcolmxio.places.domain.interactor.country.CountryInteractor
+import ru.malcolmxio.places.domain.model.country.Place
 import ru.malcolmxio.places.presentation.base.BasePresenter
 import ru.malcolmxio.places.presentation.flow.FlowRouter
 import javax.inject.Inject
@@ -25,6 +27,8 @@ class CountriesPresenter @Inject constructor(
             )
             .connect()
     }
+
+    fun onItemClicked(geopointData: ArrayList<Place>) = router.startFlow(Screens.GeoMap(geopointData))
 
     fun onBackPressed() = router.exit()
 

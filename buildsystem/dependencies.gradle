@@ -2,6 +2,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
@@ -9,6 +12,7 @@ ext {
     //Android libraries
     glide_version = '4.10.0'
     room_version = '2.2.3'
+    maps_version = '15.0.1'
 
     //Third party libraries
     dagger_version = '2.25.4'
@@ -39,6 +43,11 @@ ext {
             design                  : 'com.google.android.material:material:1.0.0',
             constraintLayout        : 'androidx.constraintlayout:constraintlayout:1.1.3',
             androidAnnotations      : 'androidx.annotation:annotation:1.0.0',
+            //Google Maps
+            mapsBasement            : "com.google.android.gms:play-services-basement:$maps_version",
+            mapsBase                : "com.google.android.gms:play-services-base:$maps_version",
+            mapsGcm                 : "com.google.android.gms:play-services-gcm:$maps_version",
+            mapsLocation            : "com.google.android.gms:play-services-location:$maps_version",
             //Room
             room                    : "androidx.room:room-runtime:$room_version",
             roomKapt                : "androidx.room:room-compiler:$room_version",

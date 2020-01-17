@@ -18,6 +18,7 @@ android {
         versionCode config["version_code"]
         versionName config["version_name"]
         testInstrumentationRunner config["test_runner"]
+        multiDexEnabled true
     }
 
     packagingOptions {
@@ -51,6 +52,8 @@ dependencies {
     def unitTestDependencies = rootProject.ext.unitTesting
     def acceptanceTestDependencies = rootProject.ext.acceptanceTesting
 
+    implementation 'com.android.support:multidex:1.0.3'
+
     //Compile time dependencies
     kapt applicationDependencies.daggerCompiler
     kapt applicationDependencies.glideKapt
@@ -68,6 +71,12 @@ dependencies {
     implementation applicationDependencies.recyclerView
     implementation applicationDependencies.design
     implementation applicationDependencies.androidAnnotations
+    //Google Maps
+    implementation (name:'maps-sdk-3.0.0-beta', ext:'aar')
+    implementation applicationDependencies.mapsBasement
+    implementation applicationDependencies.mapsBase
+    implementation applicationDependencies.mapsGcm
+    implementation applicationDependencies.mapsLocation
     //Room
     implementation applicationDependencies.room
     implementation applicationDependencies.roomRx

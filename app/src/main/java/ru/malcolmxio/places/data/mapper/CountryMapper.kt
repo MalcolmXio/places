@@ -18,8 +18,8 @@ class CountryMapper @Inject constructor() : Mapper<CountryNetworkModel, List<Cou
                         0L,
                         placeDto.name ?: "",
                         Coordinates(
-                            placeDto.lat?.toLongOrNull() ?: 0L,
-                            placeDto.lon?.toLongOrNull() ?: 0L
+                            placeDto.lat?.toDoubleOrNull() ?: 0.0,
+                            placeDto.lon?.toDoubleOrNull() ?: 0.0
                         )
                     )
                 } ?: listOf()

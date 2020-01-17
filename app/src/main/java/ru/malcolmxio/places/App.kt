@@ -1,6 +1,6 @@
 package ru.malcolmxio.places
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import ru.malcolmxio.places.di.component.AppComponent
 import ru.malcolmxio.places.di.component.DaggerAppComponent
 import ru.malcolmxio.places.di.component.FlowComponent
@@ -8,7 +8,7 @@ import ru.malcolmxio.places.di.module.AppModule
 import ru.malcolmxio.places.di.module.FlowNavigationModule
 import ru.terrakok.cicerone.Router
 
-class App : Application() {
+class App : MultiDexApplication() {
 
     lateinit var appComponent: AppComponent
     var flowComponent: FlowComponent? = null
