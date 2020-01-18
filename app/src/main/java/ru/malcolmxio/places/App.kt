@@ -21,10 +21,8 @@ class App : MultiDexApplication() {
             .build()
     }
 
-    fun createFlowComponent(router: Router) {
-        if (flowComponent == null) {
-            flowComponent = appComponent.plusFlowComponent(FlowNavigationModule(router))
-        }
+    fun addFlowComponent(router: Router) {
+        flowComponent = appComponent.plusFlowComponent(FlowNavigationModule(router))
     }
 
     fun destroyFlowComponent() {

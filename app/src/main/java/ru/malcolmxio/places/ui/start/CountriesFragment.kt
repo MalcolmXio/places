@@ -9,7 +9,6 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.malcolmxio.places.R
 import ru.malcolmxio.places.domain.model.country.Country
-import ru.malcolmxio.places.domain.model.country.Place
 import ru.malcolmxio.places.presentation.countries.CountriesPresenter
 import ru.malcolmxio.places.presentation.countries.CountriesView
 import ru.malcolmxio.places.ui.base.BaseFragment

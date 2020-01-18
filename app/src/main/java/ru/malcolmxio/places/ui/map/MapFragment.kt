@@ -14,7 +14,6 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.malcolmxio.places.R
 import ru.malcolmxio.places.domain.model.country.Country
-import ru.malcolmxio.places.domain.model.country.Place
 import ru.malcolmxio.places.presentation.map.MapPresenter
 import ru.malcolmxio.places.presentation.map.MapView
 import ru.malcolmxio.places.ui.base.BaseFragment
@@ -60,11 +59,18 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         presenter.onBackPressed()
     }
 
     override fun onMapReady(p0: GoogleMap?) {
-        val bounds = LatLngBounds(LatLng(countryData.bounds.bottomLeftPoint.lat, countryData.bounds.bottomLeftPoint.lon), LatLng(countryData.bounds.upperRightPoint.lat, countryData.bounds.upperRightPoint.lon))
+        val bounds = LatLngBounds(
+            LatLng(
+                countryData.bounds.bottomLeftPoint.lat,
+                countryData.bounds.bottomLeftPoint.lon
+            ),
+            LatLng(countryData.bounds.upperRightPoint.lat, countryData.bounds.upperRightPoint.lon)
+        )
         countryData.places.forEach {
             p0?.addMarker(
                 MarkerOptions()

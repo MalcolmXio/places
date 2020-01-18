@@ -25,7 +25,7 @@ abstract class FlowFragment : BaseFragment() {
     lateinit var navigatorHolder: NavigatorHolder
 
     override fun injectDependencies() {
-        getApplication().createFlowComponent(globalRouter)
+        getApplication().addFlowComponent(globalRouter)
         getApplication().flowComponent?.inject(this)
     }
 
