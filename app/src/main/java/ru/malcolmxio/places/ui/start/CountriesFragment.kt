@@ -73,7 +73,7 @@ class CountriesFragment : BaseFragment(), CountriesView {
     private inner class CountryAdapter : ListDelegationAdapter<MutableList<Any>>() {
         init {
             items = mutableListOf()
-            delegatesManager.addDelegate(CountriesAdapterDelegate { presenter.onItemClicked(it.places as ArrayList<Place>) })
+            delegatesManager.addDelegate(CountriesAdapterDelegate { presenter.onItemClicked(it) })
         }
 
         fun setData(libraries: List<Country>) {

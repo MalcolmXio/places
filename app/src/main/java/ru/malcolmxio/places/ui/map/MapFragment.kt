@@ -7,11 +7,13 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_map.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.malcolmxio.places.R
+import ru.malcolmxio.places.domain.model.country.Country
 import ru.malcolmxio.places.domain.model.country.Place
 import ru.malcolmxio.places.presentation.map.MapPresenter
 import ru.malcolmxio.places.presentation.map.MapView
@@ -26,7 +28,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
 
     override val layoutRes = R.layout.fragment_map
 
-    private val geopointData: ArrayList<Place> by argument(ARG_GEOPOINT_DATA, arrayListOf())
+    private val countryData: Country by argument(ARG_COUNTRY_DATA)
 
     @Inject
     lateinit var presenterProvider: MapPresenter
@@ -39,6 +41,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        toolbar.title = countryData.name
         toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
         toolbar.addSystemTopPadding()
 
@@ -61,15 +64,16 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
     }
 
     override fun onMapReady(p0: GoogleMap?) {
-        val target = LatLng(geopointData[0].coordinates.lat, geopointData[0].coordinates.lon)
-        geopointData.forEach {
+        val bounds = LatLngBounds(LatLng(countryData.bounds.bottomLeftPoint.lat, countryData.bounds.bottomLeftPoint.lon), LatLng(countryData.bounds.upperRightPoint.lat, countryData.bounds.upperRightPoint.lon))
+        countryData.places.forEach {
             p0?.addMarker(
                 MarkerOptions()
                     .position(LatLng(it.coordinates.lat, it.coordinates.lon))
                     .title(it.name)
             )
         }
-        p0?.moveCamera(CameraUpdateFactory.newLatLng(target))
+        p0?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, MAP_PADDING_FROM_BOUNDS))
+        p0?.setLatLngBoundsForCameraTarget(bounds)
     }
 
     override fun injectDependencies() {
@@ -78,13 +82,14 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
     }
 
     companion object {
+        private const val MAP_PADDING_FROM_BOUNDS = 30
 
-        private const val ARG_GEOPOINT_DATA = "ARG_GEOPOINT_DATA"
+        private const val ARG_COUNTRY_DATA = "ARG_COUNTRY_DATA"
 
-        fun create(geopointData: ArrayList<Place>) =
+        fun create(countryData: Country) =
             MapFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_GEOPOINT_DATA, geopointData)
+                    putSerializable(ARG_COUNTRY_DATA, countryData)
                 }
             }
 

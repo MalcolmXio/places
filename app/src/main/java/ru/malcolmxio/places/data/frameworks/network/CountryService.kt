@@ -10,7 +10,7 @@ interface CountryService {
     fun getCountries(): Single<CountryNetworkModel>
 
     companion object {
-        private const val ARG_COUNTRIES_FILE_NAME = "bins/q2d26"
+        private const val ARG_COUNTRIES_FILE_NAME = "bins/r6gt6"
     }
 
 }

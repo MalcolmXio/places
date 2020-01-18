@@ -1,5 +1,6 @@
 package ru.malcolmxio.places
 
+import ru.malcolmxio.places.domain.model.country.Country
 import ru.malcolmxio.places.domain.model.country.Place
 import ru.malcolmxio.places.ui.map.MapFragment
 import ru.malcolmxio.places.ui.start.CountriesFragment
@@ -19,8 +20,8 @@ object Screens {
         override fun getFragment() = CountriesFragment()
     }
 
-    data class GeoMap(val geoPointData: ArrayList<Place>) : SupportAppScreen() {
-        override fun getFragment() = MapFragment.create(geoPointData)
+    data class GeoMap(val countryData: Country) : SupportAppScreen() {
+        override fun getFragment() = MapFragment.create(countryData)
     }
 
 }
