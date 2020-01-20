@@ -6,9 +6,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.fragment_map.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -24,11 +22,13 @@ import ru.malcolmxio.places.util.extensions.addSystemTopPadding
 import ru.malcolmxio.places.util.extensions.getApplication
 import javax.inject.Inject
 
-class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
+class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     override val layoutRes = R.layout.fragment_map
 
     private val countryData: Country by argument(ARG_COUNTRY_DATA)
+
+    private var map: GoogleMap? = null
 
     @Inject
     lateinit var presenterProvider: MapPresenter
@@ -65,6 +65,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
     }
 
     override fun onMapReady(p0: GoogleMap?) {
+        map = p0
         val bounds = LatLngBounds(
             LatLng(
                 countryData.bounds.bottomLeftPoint.lat,
@@ -81,6 +82,19 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
         }
         p0?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, MAP_PADDING_FROM_BOUNDS))
         p0?.setLatLngBoundsForCameraTarget(bounds)
+        map?.setOnMarkerClickListener(this)
+    }
+
+
+    override fun onMarkerClick(p0: Marker?): Boolean {
+        p0?.let {
+            val cameraPosition = CameraPosition.builder()
+                .target(it.position)
+                .zoom(CAMERA_MARKER_ZOOM)
+                .build()
+            map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
+        return true
     }
 
     override fun injectDependencies() {
@@ -90,6 +104,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
 
     companion object {
         private const val MAP_PADDING_FROM_BOUNDS = 30
+        private const val CAMERA_MARKER_ZOOM = 10F
 
         private const val ARG_COUNTRY_DATA = "ARG_COUNTRY_DATA"
 

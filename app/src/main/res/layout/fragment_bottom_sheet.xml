@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="56dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bottomSheetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:paddingStart="15dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="15dp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Purnululu" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bottomSheetSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:paddingStart="15dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="20dp"
+        android:textColor="@color/white_50"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomSheetTitle"
+        tools:text="National park" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/share"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_share_bottomsheet"
+        app:layout_constraintEnd_toStartOf="@+id/save"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomSheetSubtitle"
+        app:tint="@color/colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/shareTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAllCaps="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/share"
+        app:layout_constraintStart_toStartOf="@+id/share"
+        app:layout_constraintTop_toBottomOf="@+id/share"
+        tools:text="share" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/save"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_save_bottomsheet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/share"
+        app:layout_constraintTop_toBottomOf="@+id/bottomSheetSubtitle"
+        app:tint="@color/colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/saveTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/save"
+        app:layout_constraintStart_toStartOf="@+id/save"
+        app:layout_constraintTop_toBottomOf="@+id/save"
+        tools:text="save" />
+
+    <view
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/dividerGreyColor"
+        app:layout_constraintTop_toBottomOf="@+id/shareTitle" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bottomSheetPoint"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_geopoint_bottomsheet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:tint="@color/colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/pointContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="18dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/primary_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomSheetPoint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bottomSheetPoint"
+        app:layout_constraintTop_toTopOf="@+id/bottomSheetPoint"
+        tools:text="Western Australia 6770" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bottomSheetWebAddress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_web_bottomsheet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pointContent"
+        app:tint="@color/colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/webContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="18dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/primary_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomSheetWebAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bottomSheetWebAddress"
+        app:layout_constraintTop_toTopOf="@+id/bottomSheetWebAddress"
+        tools:text="parks.dpaw.wa.gov.au" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bottomSheetCall"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_call_bottomsheet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/webContent"
+        app:tint="@color/colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/callContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="18dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/primary_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomSheetCall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bottomSheetCall"
+        app:layout_constraintTop_toTopOf="@+id/bottomSheetCall"
+        tools:text="+61 8 9168 7300" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -76,9 +76,9 @@ class CountriesFragment : BaseFragment(), CountriesView {
             delegatesManager.addDelegate(CountriesAdapterDelegate { presenter.onItemClicked(it) })
         }
 
-        fun setData(libraries: List<Country>) {
+        fun setData(countries: List<Country>) {
             items.clear()
-            items.addAll(libraries)
+            items.addAll(countries)
 
             notifyDataSetChanged()
         }
