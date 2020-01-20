@@ -17,6 +17,7 @@ import ru.malcolmxio.places.domain.model.country.Country
 import ru.malcolmxio.places.presentation.map.MapPresenter
 import ru.malcolmxio.places.presentation.map.MapView
 import ru.malcolmxio.places.ui.base.BaseFragment
+import ru.malcolmxio.places.ui.base.FlowFragment
 import ru.malcolmxio.places.util.argument
 import ru.malcolmxio.places.util.extensions.addSystemBottomPadding
 import ru.malcolmxio.places.util.extensions.addSystemTopPadding
@@ -83,8 +84,8 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
     }
 
     override fun injectDependencies() {
-        super.injectDependencies()
-        getApplication().flowComponent?.inject(this)
+        val parentFragmentName = (parentFragment as? FlowFragment)?.fragmentScopeName
+        getApplication().components[parentFragmentName]?.inject(this)
     }
 
     companion object {

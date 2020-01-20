@@ -77,7 +77,8 @@ abstract class BaseFragment : MvpAppCompatFragment() {
     override fun onDestroy() {
         super.onDestroy()
         if (needCloseScope()) {
-            getApplication().destroyFlowComponent()
+            val scopeName = (parentFragment as? FlowFragment)?.fragmentScopeName
+            getApplication().destroyFlowComponent(scopeName)
         }
     }
 
@@ -107,13 +108,12 @@ abstract class BaseFragment : MvpAppCompatFragment() {
         }
     }
 
-    open fun injectDependencies() = Unit
+    abstract fun injectDependencies()
 
     open fun onBackPressed() = Unit
 
     companion object {
         private const val PROGRESS_TAG = "bf_progress"
-        private const val STATE_SCOPE_NAME = "state_scope_name"
     }
 
 }

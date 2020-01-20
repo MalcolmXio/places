@@ -12,6 +12,7 @@ import ru.malcolmxio.places.domain.model.country.Country
 import ru.malcolmxio.places.presentation.countries.CountriesPresenter
 import ru.malcolmxio.places.presentation.countries.CountriesView
 import ru.malcolmxio.places.ui.base.BaseFragment
+import ru.malcolmxio.places.ui.base.FlowFragment
 import ru.malcolmxio.places.ui.start.adapter.CountriesAdapterDelegate
 import ru.malcolmxio.places.util.extensions.addDividerItemDecoration
 import ru.malcolmxio.places.util.extensions.addSystemBottomPadding
@@ -36,7 +37,7 @@ class CountriesFragment : BaseFragment(), CountriesView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
+        toolbar.setNavigationOnClickListener { /*presenter.onBackPressed()*/ }
         toolbar.addSystemTopPadding()
 
         with(recyclerView) {
@@ -65,8 +66,8 @@ class CountriesFragment : BaseFragment(), CountriesView {
     }
 
     override fun injectDependencies() {
-        super.injectDependencies()
-        getApplication().flowComponent?.inject(this)
+        val parentFragmentName = (parentFragment as? FlowFragment)?.fragmentScopeName
+        getApplication().components[parentFragmentName]?.inject(this)
     }
 
     private inner class CountryAdapter : ListDelegationAdapter<MutableList<Any>>() {

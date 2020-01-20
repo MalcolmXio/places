@@ -76,14 +76,14 @@ class RouteActivity : MvpAppCompatActivity() {
 
         (application as App).appComponent.inject(this)
         //appLauncher.onLaunch()
-        //Launching CountriesFragment
-        val rootScreen = Screens.StartFlow
-        router.newRootScreen(rootScreen)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_container)
 
         if (savedInstanceState == null) {
             //appLauncher.coldStart()
+            //Cold start
+            val rootScreen = Screens.StartFlow
+            router.newRootScreen(rootScreen)
         }
         container.doOnApplyWindowInsets { view, insets, initialPadding ->
             view.updatePadding(

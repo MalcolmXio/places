@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction
 import ru.malcolmxio.places.R
 import ru.malcolmxio.places.di.NavHolder
 import ru.malcolmxio.places.util.extensions.getApplication
+import ru.malcolmxio.places.util.extensions.objectScopeName
 import ru.malcolmxio.places.util.extensions.setLaunchScreen
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
@@ -24,9 +25,14 @@ abstract class FlowFragment : BaseFragment() {
     @NavHolder("Fragment")
     lateinit var navigatorHolder: NavigatorHolder
 
+    lateinit var fragmentScopeName: String
+
     override fun injectDependencies() {
-        getApplication().addFlowComponent(globalRouter)
-        getApplication().flowComponent?.inject(this)
+        if (getApplication().components[fragmentScopeName] == null) {
+            // Adding new flow component only if onDestroy() was called.
+            getApplication().addFlowComponent(globalRouter, fragmentScopeName)
+        }
+        getApplication().components[fragmentScopeName]?.inject(this)
     }
 
     private val navigator: Navigator by lazy {
@@ -48,6 +54,7 @@ abstract class FlowFragment : BaseFragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        fragmentScopeName = savedInstanceState?.getString(STATE_SCOPE_NAME) ?: objectScopeName()
         super.onCreate(savedInstanceState)
         if (childFragmentManager.fragments.isEmpty()) {
             navigator.setLaunchScreen(getLaunchScreen())
@@ -69,4 +76,14 @@ abstract class FlowFragment : BaseFragment() {
         navigatorHolder.removeNavigator()
         super.onPause()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_SCOPE_NAME, fragmentScopeName)
+    }
+
+    companion object {
+        private const val STATE_SCOPE_NAME = "state_scope_name"
+    }
+
 }

@@ -11,7 +11,7 @@ import ru.terrakok.cicerone.Router
 class App : MultiDexApplication() {
 
     lateinit var appComponent: AppComponent
-    var flowComponent: FlowComponent? = null
+    val components = hashMapOf<String, FlowComponent>()
 
     override fun onCreate() {
         super.onCreate()
@@ -21,12 +21,12 @@ class App : MultiDexApplication() {
             .build()
     }
 
-    fun addFlowComponent(router: Router) {
-        flowComponent = appComponent.plusFlowComponent(FlowNavigationModule(router))
+    fun addFlowComponent(router: Router, scopeName: String) {
+        components[scopeName] = appComponent.plusFlowComponent(FlowNavigationModule(router))
     }
 
-    fun destroyFlowComponent() {
-        flowComponent = null
+    fun destroyFlowComponent(scopeName: String?) {
+        components.remove(scopeName)
     }
 
 }
