@@ -1,10 +1,11 @@
 package ru.malcolmxio.places.di.component
 
+import androidx.navigation.NavController
 import com.bumptech.glide.module.AppGlideModule
 import dagger.Component
 import ru.malcolmxio.places.di.module.AppModule
-import ru.malcolmxio.places.di.module.FlowNavigationModule
 import ru.malcolmxio.places.di.module.NetModule
+import ru.malcolmxio.places.di.module.PresenterModule
 import ru.malcolmxio.places.ui.RouteActivity
 import ru.malcolmxio.places.ui.base.BaseFragment
 import javax.inject.Singleton
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, NetModule::class])
 interface AppComponent {
 
-    fun plusFlowComponent(module: FlowNavigationModule): FlowComponent
+    fun plusFlowComponent(module: PresenterModule): FlowComponent
 
     fun inject(activity: RouteActivity)
 

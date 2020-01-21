@@ -6,34 +6,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.layout_container.*
 import moxy.MvpAppCompatActivity
 import ru.malcolmxio.places.App
 import ru.malcolmxio.places.R
-import ru.malcolmxio.places.Screens
-import ru.malcolmxio.places.di.NavHolder
 import ru.malcolmxio.places.ui.base.BaseFragment
 import ru.malcolmxio.places.ui.base.MessageDialogFragment
 import ru.malcolmxio.places.util.extensions.doOnApplyWindowInsets
 import ru.malcolmxio.places.util.extensions.updatePadding
-import ru.terrakok.cicerone.Navigator
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
-import ru.terrakok.cicerone.commands.Command
-import javax.inject.Inject
 
 class RouteActivity : MvpAppCompatActivity() {
-
-    @Inject
-    @NavHolder("Global")
-    lateinit var navigatorHolder: NavigatorHolder
-
-    @Inject
-    lateinit var router: Router
 
     //@Inject
     //lateinit var systemMessageNotifier: SystemMessageNotifier
@@ -42,18 +25,6 @@ class RouteActivity : MvpAppCompatActivity() {
 
     private val currentFragment: BaseFragment?
         get() = supportFragmentManager.findFragmentById(R.id.container) as? BaseFragment
-
-    private val navigator: Navigator =
-        object : SupportAppNavigator(this, supportFragmentManager, R.id.container) {
-            override fun setupFragmentTransaction(
-                command: Command?,
-                currentFragment: Fragment?,
-                nextFragment: Fragment?,
-                fragmentTransaction: FragmentTransaction
-            ) {
-                fragmentTransaction.setReorderingAllowed(true)
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -75,15 +46,14 @@ class RouteActivity : MvpAppCompatActivity() {
         }
 
         (application as App).appComponent.inject(this)
-        //appLauncher.onLaunch()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_container)
 
         if (savedInstanceState == null) {
             //appLauncher.coldStart()
             //Cold start
-            val rootScreen = Screens.StartFlow
-            router.newRootScreen(rootScreen)
+            //val rootScreen = Screens.StartFlow
+            //router.newRootScreen(rootScreen)
         }
         container.doOnApplyWindowInsets { view, insets, initialPadding ->
             view.updatePadding(
@@ -104,11 +74,9 @@ class RouteActivity : MvpAppCompatActivity() {
     override fun onResumeFragments() {
         super.onResumeFragments()
         //subscribeOnSystemMessages()
-        navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
-        navigatorHolder.removeNavigator()
         //unsubscribeOnSystemMessages()
         super.onPause()
     }

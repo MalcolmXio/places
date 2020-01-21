@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/countriesFragment">
+    <fragment
+        android:id="@+id/countriesFragment"
+        android:name="ru.malcolmxio.places.ui.start.CountriesFragment"
+        android:label="CountriesFragment" >
+        <action
+            android:id="@+id/action_countriesFragment_to_mapFragment"
+            app:destination="@id/mapFragment">
+
+            <argument
+                android:name="countryData"
+                app:argType="ru.malcolmxio.places.domain.model.country.Country" />
+
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="ru.malcolmxio.places.ui.map.MapFragment"
+        android:label="MapFragment" />
+</navigation>

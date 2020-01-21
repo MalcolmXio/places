@@ -15,7 +15,6 @@ import ru.malcolmxio.places.domain.model.country.Country
 import ru.malcolmxio.places.presentation.map.MapPresenter
 import ru.malcolmxio.places.presentation.map.MapView
 import ru.malcolmxio.places.ui.base.BaseFragment
-import ru.malcolmxio.places.ui.base.FlowFragment
 import ru.malcolmxio.places.util.argument
 import ru.malcolmxio.places.util.extensions.addSystemBottomPadding
 import ru.malcolmxio.places.util.extensions.addSystemTopPadding
@@ -98,15 +97,15 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
     }
 
     override fun injectDependencies() {
-        val parentFragmentName = (parentFragment as? FlowFragment)?.fragmentScopeName
-        getApplication().components[parentFragmentName]?.inject(this)
+        super.injectDependencies()
+        getApplication().components[fragmentScopeName]?.inject(this)
     }
 
     companion object {
         private const val MAP_PADDING_FROM_BOUNDS = 30
         private const val CAMERA_MARKER_ZOOM = 10F
 
-        private const val ARG_COUNTRY_DATA = "ARG_COUNTRY_DATA"
+        private const val ARG_COUNTRY_DATA = "countryData"
 
         fun create(countryData: Country) =
             MapFragment().apply {

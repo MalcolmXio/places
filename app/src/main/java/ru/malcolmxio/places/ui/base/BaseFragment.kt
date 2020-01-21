@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import moxy.MvpAppCompatFragment
 import ru.malcolmxio.places.util.extensions.getApplication
-import ru.terrakok.cicerone.Router
-import javax.inject.Inject
+import ru.malcolmxio.places.util.extensions.objectScopeName
 
 abstract class BaseFragment : MvpAppCompatFragment() {
     abstract val layoutRes: Int
@@ -16,21 +15,15 @@ abstract class BaseFragment : MvpAppCompatFragment() {
 
     private val viewHandler = Handler()
 
-    @Inject
-    lateinit var globalRouter: Router
     //protected open val parentScopeName: String by lazy {
     //(parentFragment as? BaseFragment)?.fragmentScopeName
     //   ?: DI.SERVER_SCOPE
     //}
 
-    //private lateinit var fragmentScopeName: String
-    //protected lateinit var scope: Scope
-    //private set
-
-    //protected open fun installModules(scope: Scope) {}
+    lateinit var fragmentScopeName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //fragmentScopeName = savedInstanceState?.getString(STATE_SCOPE_NAME) ?: objectScopeName()
+        fragmentScopeName = savedInstanceState?.getString(STATE_SCOPE_NAME) ?: objectScopeName()
 
         //if (Toothpick.isScopeOpen(fragmentScopeName)) {
         //    Timber.d("Get exist UI scope: $fragmentScopeName")
@@ -71,14 +64,13 @@ abstract class BaseFragment : MvpAppCompatFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         instanceStateSaved = true
-        //outState.putString(STATE_SCOPE_NAME, fragmentScopeName)
+        outState.putString(STATE_SCOPE_NAME, fragmentScopeName)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         if (needCloseScope()) {
-            val scopeName = (parentFragment as? FlowFragment)?.fragmentScopeName
-            getApplication().destroyFlowComponent(scopeName)
+            getApplication().destroyFlowComponent(fragmentScopeName)
         }
     }
 
@@ -108,12 +100,17 @@ abstract class BaseFragment : MvpAppCompatFragment() {
         }
     }
 
-    abstract fun injectDependencies()
+    open fun injectDependencies() {
+        if (!getApplication().components.containsKey(fragmentScopeName)) {
+            getApplication().addFlowComponent(fragmentScopeName)
+        }
+    }
 
     open fun onBackPressed() = Unit
 
     companion object {
         private const val PROGRESS_TAG = "bf_progress"
+        private const val STATE_SCOPE_NAME = "fragment"
     }
 
 }

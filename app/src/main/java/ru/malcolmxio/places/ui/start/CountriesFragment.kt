@@ -2,6 +2,8 @@ package ru.malcolmxio.places.ui.start
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import kotlinx.android.synthetic.main.fragment_countries.*
@@ -12,7 +14,6 @@ import ru.malcolmxio.places.domain.model.country.Country
 import ru.malcolmxio.places.presentation.countries.CountriesPresenter
 import ru.malcolmxio.places.presentation.countries.CountriesView
 import ru.malcolmxio.places.ui.base.BaseFragment
-import ru.malcolmxio.places.ui.base.FlowFragment
 import ru.malcolmxio.places.ui.start.adapter.CountriesAdapterDelegate
 import ru.malcolmxio.places.util.extensions.addDividerItemDecoration
 import ru.malcolmxio.places.util.extensions.addSystemBottomPadding
@@ -57,23 +58,28 @@ class CountriesFragment : BaseFragment(), CountriesView {
         showProgressDialog(show)
     }
 
+    override fun navigateTo(screen: Int, args: Country) {
+        val action = CountriesFragmentDirections.actionCountriesFragmentToMapFragment(args)
+        findNavController().navigate(action)
+    }
+
     override fun showMessage(msg: String) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 
     override fun onBackPressed() {
-        presenter.onBackPressed()
+        //presenter.onBackPressed()
     }
 
     override fun injectDependencies() {
-        val parentFragmentName = (parentFragment as? FlowFragment)?.fragmentScopeName
-        getApplication().components[parentFragmentName]?.inject(this)
+        super.injectDependencies()
+        getApplication().components[fragmentScopeName]?.inject(this)
     }
 
     private inner class CountryAdapter : ListDelegationAdapter<MutableList<Any>>() {
         init {
             items = mutableListOf()
-            delegatesManager.addDelegate(CountriesAdapterDelegate { presenter.onItemClicked(it) })
+            delegatesManager.addDelegate(CountriesAdapterDelegate { navigateTo(R.id.mapFragment, it) })
         }
 
         fun setData(countries: List<Country>) {

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     def config = rootProject.extensions.getByName("ext")
@@ -73,6 +74,9 @@ dependencies {
     implementation applicationDependencies.androidAnnotations
     //Google Maps
     implementation applicationDependencies.maps
+    //Navigation
+    implementation applicationDependencies.navUi
+    implementation applicationDependencies.navFragment
     //Room
     implementation applicationDependencies.room
     implementation applicationDependencies.roomRx
@@ -96,8 +100,6 @@ dependencies {
     implementation applicationDependencies.moxy
     implementation applicationDependencies.moxyAndroidX
     implementation applicationDependencies.moxyKtx
-    //Cicerone
-    implementation applicationDependencies.cicerone
     //Rx
     implementation applicationDependencies.rxAndroid
     implementation applicationDependencies.rxJava

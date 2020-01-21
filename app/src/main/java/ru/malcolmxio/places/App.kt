@@ -5,8 +5,7 @@ import ru.malcolmxio.places.di.component.AppComponent
 import ru.malcolmxio.places.di.component.DaggerAppComponent
 import ru.malcolmxio.places.di.component.FlowComponent
 import ru.malcolmxio.places.di.module.AppModule
-import ru.malcolmxio.places.di.module.FlowNavigationModule
-import ru.terrakok.cicerone.Router
+import ru.malcolmxio.places.di.module.PresenterModule
 
 class App : MultiDexApplication() {
 
@@ -21,8 +20,8 @@ class App : MultiDexApplication() {
             .build()
     }
 
-    fun addFlowComponent(router: Router, scopeName: String) {
-        components[scopeName] = appComponent.plusFlowComponent(FlowNavigationModule(router))
+    fun addFlowComponent(scopeName: String) {
+        components[scopeName] = appComponent.plusFlowComponent(PresenterModule())
     }
 
     fun destroyFlowComponent(scopeName: String?) {
