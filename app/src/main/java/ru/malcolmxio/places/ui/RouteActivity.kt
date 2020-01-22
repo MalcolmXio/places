@@ -24,7 +24,7 @@ class RouteActivity : MvpAppCompatActivity() {
     private var notifierDisposable: Disposable? = null
 
     private val currentFragment: BaseFragment?
-        get() = supportFragmentManager.findFragmentById(R.id.container) as? BaseFragment
+        get() = supportFragmentManager.findFragmentById(R.id.navHostFragment)?.childFragmentManager?.primaryNavigationFragment as? BaseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -49,12 +49,6 @@ class RouteActivity : MvpAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_container)
 
-        if (savedInstanceState == null) {
-            //appLauncher.coldStart()
-            //Cold start
-            //val rootScreen = Screens.StartFlow
-            //router.newRootScreen(rootScreen)
-        }
         container.doOnApplyWindowInsets { view, insets, initialPadding ->
             view.updatePadding(
                 left = initialPadding.left + insets.systemWindowInsetLeft,
@@ -79,10 +73,6 @@ class RouteActivity : MvpAppCompatActivity() {
     override fun onPause() {
         //unsubscribeOnSystemMessages()
         super.onPause()
-    }
-
-    override fun onBackPressed() {
-        currentFragment?.onBackPressed() ?: super.onBackPressed()
     }
 
     private fun showAlertMessage(message: String) {

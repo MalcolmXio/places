@@ -2,8 +2,6 @@ package ru.malcolmxio.places.ui.start
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import kotlinx.android.synthetic.main.fragment_countries.*
@@ -58,17 +56,12 @@ class CountriesFragment : BaseFragment(), CountriesView {
         showProgressDialog(show)
     }
 
-    override fun navigateTo(screen: Int, args: Country) {
-        val action = CountriesFragmentDirections.actionCountriesFragmentToMapFragment(args)
-        findNavController().navigate(action)
+    override fun navigateToMap(argument: Country) {
+        navigator.moveTo(CountriesFragmentDirections.actionCountriesFragmentToMapFragment(argument))
     }
 
     override fun showMessage(msg: String) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onBackPressed() {
-        //presenter.onBackPressed()
     }
 
     override fun injectDependencies() {
@@ -79,7 +72,7 @@ class CountriesFragment : BaseFragment(), CountriesView {
     private inner class CountryAdapter : ListDelegationAdapter<MutableList<Any>>() {
         init {
             items = mutableListOf()
-            delegatesManager.addDelegate(CountriesAdapterDelegate { navigateTo(R.id.mapFragment, it) })
+            delegatesManager.addDelegate(CountriesAdapterDelegate { presenter.onItemClicked(it) })
         }
 
         fun setData(countries: List<Country>) {

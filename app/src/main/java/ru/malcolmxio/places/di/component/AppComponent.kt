@@ -1,6 +1,5 @@
 package ru.malcolmxio.places.di.component
 
-import androidx.navigation.NavController
 import com.bumptech.glide.module.AppGlideModule
 import dagger.Component
 import ru.malcolmxio.places.di.module.AppModule

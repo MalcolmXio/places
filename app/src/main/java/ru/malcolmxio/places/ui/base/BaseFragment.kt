@@ -3,36 +3,35 @@ package ru.malcolmxio.places.ui.base
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
+import ru.malcolmxio.places.presentation.flow.Navigator
 import ru.malcolmxio.places.util.extensions.getApplication
 import ru.malcolmxio.places.util.extensions.objectScopeName
 
 abstract class BaseFragment : MvpAppCompatFragment() {
     abstract val layoutRes: Int
 
+    open val navigator: Navigator by lazy {
+        object : Navigator(findNavController()) {
+            override fun handleBackButtonEvent() {
+                onBackPressed().isEnabled = true
+            }
+        }
+    }
+
     private var instanceStateSaved: Boolean = false
 
     private val viewHandler = Handler()
-
-    //protected open val parentScopeName: String by lazy {
-    //(parentFragment as? BaseFragment)?.fragmentScopeName
-    //   ?: DI.SERVER_SCOPE
-    //}
 
     lateinit var fragmentScopeName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         fragmentScopeName = savedInstanceState?.getString(STATE_SCOPE_NAME) ?: objectScopeName()
 
-        //if (Toothpick.isScopeOpen(fragmentScopeName)) {
-        //    Timber.d("Get exist UI scope: $fragmentScopeName")
-        //    scope = Toothpick.openScope(fragmentScopeName)
-        //} else {
-        //    Timber.d("Init new UI scope: $fragmentScopeName -> $parentScopeName")
-        //    scope = Toothpick.openScopes(parentScopeName, fragmentScopeName)
-        //    installModules(scope)
-        //}
         getApplication().appComponent.inject(this)
         injectDependencies()
         super.onCreate(savedInstanceState)
@@ -44,6 +43,11 @@ abstract class BaseFragment : MvpAppCompatFragment() {
         savedInstanceState: Bundle?
     ) =
         inflater.inflate(layoutRes, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navigator.handleBackButtonEvent()
+    }
 
     override fun onResume() {
         super.onResume()
@@ -106,7 +110,11 @@ abstract class BaseFragment : MvpAppCompatFragment() {
         }
     }
 
-    open fun onBackPressed() = Unit
+    open fun onBackPressed() =
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            this.isEnabled = false
+            requireActivity().onBackPressed()
+        }
 
     companion object {
         private const val PROGRESS_TAG = "bf_progress"

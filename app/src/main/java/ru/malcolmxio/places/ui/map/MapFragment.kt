@@ -2,6 +2,8 @@ package ru.malcolmxio.places.ui.map
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -41,7 +43,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         toolbar.title = countryData.name
-        toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
+        toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         toolbar.addSystemTopPadding()
 
         val map = childFragmentManager.findFragmentById(R.id.map)
@@ -58,9 +60,10 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        presenter.onBackPressed()
+    override fun onBackPressed(): OnBackPressedCallback {
+        return requireActivity().onBackPressedDispatcher.addCallback(this) {
+            Toast.makeText(requireContext(), "Fuck You!", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onMapReady(p0: GoogleMap?) {

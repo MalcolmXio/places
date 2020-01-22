@@ -1,14 +1,22 @@
 package ru.malcolmxio.places.presentation.flow
 
-import ru.malcolmxio.places.ui.base.BaseFragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 
 /**
  * Interface implemented by flow fragments.
  */
-interface Navigator {
+abstract class Navigator(private val controller: NavController) {
 
-    fun moveTo(screen: BaseFragment)
+    open fun moveTo(directions: NavDirections) =
+        controller.navigate(directions)
 
-    fun handleBackButtonEvent()
+    open fun moveTo(destinationRes: Int) =
+        controller.navigate(destinationRes)
+
+    open fun navigateBack() =
+        controller.popBackStack()
+
+    abstract fun handleBackButtonEvent()
 
 }
