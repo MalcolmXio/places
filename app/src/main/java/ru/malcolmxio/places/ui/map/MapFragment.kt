@@ -1,6 +1,7 @@
 package ru.malcolmxio.places.ui.map
 
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
@@ -17,6 +18,7 @@ import ru.malcolmxio.places.domain.model.country.Country
 import ru.malcolmxio.places.presentation.map.MapPresenter
 import ru.malcolmxio.places.presentation.map.MapView
 import ru.malcolmxio.places.ui.base.BaseFragment
+import ru.malcolmxio.places.ui.base.bottomSheet.BaseBottomSheetDialog
 import ru.malcolmxio.places.util.argument
 import ru.malcolmxio.places.util.extensions.addSystemBottomPadding
 import ru.malcolmxio.places.util.extensions.addSystemTopPadding
@@ -42,13 +44,13 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mapContainer.addSystemBottomPadding()
         toolbar.title = countryData.name
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         toolbar.addSystemTopPadding()
 
         val map = childFragmentManager.findFragmentById(R.id.map)
         (map as? SupportMapFragment)?.apply {
-            view?.addSystemBottomPadding()
             getMapAsync(this@MapFragment)
         }
     }
@@ -95,6 +97,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
                 .zoom(CAMERA_MARKER_ZOOM)
                 .build()
             map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            BaseBottomSheetDialog(bs as ViewGroup)
         }
         return true
     }
@@ -105,17 +108,11 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
     }
 
     companion object {
+
         private const val MAP_PADDING_FROM_BOUNDS = 30
         private const val CAMERA_MARKER_ZOOM = 10F
 
         private const val ARG_COUNTRY_DATA = "countryData"
-
-        fun create(countryData: Country) =
-            MapFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_COUNTRY_DATA, countryData)
-                }
-            }
 
     }
 

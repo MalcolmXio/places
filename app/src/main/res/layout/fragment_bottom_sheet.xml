@@ -2,43 +2,50 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetFragment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="56dp"
+    app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/bottomSheetTitle"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/headerContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:paddingStart="15dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="15dp"
-        android:textColor="@color/white"
-        android:textSize="24sp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Purnululu" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/bottomSheetSubtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:paddingStart="15dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="20dp"
-        android:textColor="@color/white_50"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomSheetTitle"
-        tools:text="National park" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bottomSheetTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="15dp"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:text="Purnululu" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bottomSheetSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:paddingStart="15dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/white_50"
+            android:textSize="20sp"
+            tools:text="National park" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/share"
@@ -49,7 +56,7 @@
         app:layout_constraintEnd_toStartOf="@+id/save"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomSheetSubtitle"
+        app:layout_constraintTop_toBottomOf="@+id/headerContainer"
         app:tint="@color/colorAccent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -57,13 +64,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:text="share"
         android:textAllCaps="true"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/share"
         app:layout_constraintStart_toStartOf="@+id/share"
-        app:layout_constraintTop_toBottomOf="@+id/share"
-        tools:text="share" />
+        app:layout_constraintTop_toBottomOf="@+id/share" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/save"
@@ -74,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@+id/share"
-        app:layout_constraintTop_toBottomOf="@+id/bottomSheetSubtitle"
+        app:layout_constraintTop_toBottomOf="@+id/headerContainer"
         app:tint="@color/colorAccent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -83,15 +90,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
+        android:text="save"
         android:textAllCaps="true"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/save"
         app:layout_constraintStart_toStartOf="@+id/save"
-        app:layout_constraintTop_toBottomOf="@+id/save"
-        tools:text="save" />
+        app:layout_constraintTop_toBottomOf="@+id/save" />
 
-    <view
+    <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="2dp"
