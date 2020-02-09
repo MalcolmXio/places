@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_bottom_sheet.view.*
 import ru.malcolmxio.places.util.extensions.doOnApplyWindowInsets
+import ru.malcolmxio.places.util.extensions.updatePadding
 
 class BaseBottomSheetDialog(
-    private val container: ViewGroup
+    container: ViewGroup
 ) : BottomSheetDialog {
 
     private val bottomSheetBehaviour: BottomSheetBehavior<View> =
@@ -16,9 +17,9 @@ class BaseBottomSheetDialog(
     private var bottomInsetPadding = 0
 
     init {
-        container.doOnApplyWindowInsets { _, insets, _ ->
+        container.doOnApplyWindowInsets { v, insets, r ->
+            v.updatePadding(bottom = r.bottom + insets.systemWindowInsetBottom)
             bottomInsetPadding = insets.systemWindowInsetBottom
-            show()
             insets
         }
         bottomSheetBehaviour.state = BottomSheetBehavior.STATE_HIDDEN
@@ -35,10 +36,7 @@ class BaseBottomSheetDialog(
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         //show()
                     }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                    }
-                    else -> {
-                    }
+                    else -> Unit
                 }
             }
         })

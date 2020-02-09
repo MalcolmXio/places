@@ -1,15 +1,13 @@
 package ru.malcolmxio.places.ui.map
 
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.fragment_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_map.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -19,6 +17,7 @@ import ru.malcolmxio.places.presentation.map.MapPresenter
 import ru.malcolmxio.places.presentation.map.MapView
 import ru.malcolmxio.places.ui.base.BaseFragment
 import ru.malcolmxio.places.ui.base.bottomSheet.BaseBottomSheetDialog
+import ru.malcolmxio.places.ui.base.bottomSheet.BottomSheetDialog
 import ru.malcolmxio.places.util.argument
 import ru.malcolmxio.places.util.extensions.addSystemBottomPadding
 import ru.malcolmxio.places.util.extensions.addSystemTopPadding
@@ -32,6 +31,8 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
     private val countryData: Country by argument(ARG_COUNTRY_DATA)
 
     private var map: GoogleMap? = null
+
+    private lateinit var bottomSheet: BottomSheetDialog
 
     @Inject
     lateinit var presenterProvider: MapPresenter
@@ -48,6 +49,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
         toolbar.title = countryData.name
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         toolbar.addSystemTopPadding()
+        bottomSheet = BaseBottomSheetDialog(bottomSheetFragment)
 
         val map = childFragmentManager.findFragmentById(R.id.map)
         (map as? SupportMapFragment)?.apply {
@@ -62,11 +64,13 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 
+    /*
     override fun onBackPressed(): OnBackPressedCallback {
         return requireActivity().onBackPressedDispatcher.addCallback(this) {
             Toast.makeText(requireContext(), "Fuck You!", Toast.LENGTH_LONG).show()
         }
     }
+     */
 
     override fun onMapReady(p0: GoogleMap?) {
         map = p0
@@ -97,7 +101,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
                 .zoom(CAMERA_MARKER_ZOOM)
                 .build()
             map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-            BaseBottomSheetDialog(bs as ViewGroup)
+            bottomSheet.show()
         }
         return true
     }
@@ -109,7 +113,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, GoogleMap.OnMar
 
     companion object {
 
-        private const val MAP_PADDING_FROM_BOUNDS = 30
+        private const val MAP_PADDING_FROM_BOUNDS = 15
         private const val CAMERA_MARKER_ZOOM = 10F
 
         private const val ARG_COUNTRY_DATA = "countryData"
